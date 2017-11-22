@@ -1,0 +1,385 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"bunn",
+				"bunny1\tstatement"
+			],
+			[
+				"bunny",
+				"bunny3\tstatement"
+			],
+			[
+				"D",
+				"Dwarf"
+			],
+			[
+				"fib",
+				"fibonacci2\tfunction"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "intro.txt",
+			"settings":
+			{
+				"buffer_size": 0,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Anaconda Python Builder",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
+					"Packages/User/python3.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/python3.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
+					"Packages/User/python3.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/python3.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 374.0,
+		"last_filter": "Package Control: ",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: install",
+				"Package Control: Install Package"
+			],
+			[
+				"git:add",
+				"Git: Add..."
+			],
+			[
+				"git ",
+				"Git: Init"
+			]
+		],
+		"width": 418.0
+	},
+	"console":
+	{
+		"height": 141.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/bunmaster/g/0coding/cloudbit"
+	],
+	"file_history":
+	[
+		"/Users/bunmaster/g/0coding/cloudbit/web/app.py",
+		"/Users/bunmaster/g/0coding/cloudbit/web/cloudbit.sublime-project",
+		"/Users/bunmaster/pyworks/web/app.py",
+		"/Users/bunmaster/pyworks/web/requirements.txt",
+		"/Users/bunmaster/pyworks/web/Dockerfile.Dockerfile",
+		"/Users/bunmaster/g/0coding/python/aws/stdlibutil.py",
+		"/Users/bunmaster/g/0coding/python/aws/stdlibutil2.py",
+		"/Users/bunmaster/g/0coding/python/aws/users.json",
+		"/Users/bunmaster/g/0coding/python/aws/multithread.py",
+		"/Users/bunmaster/g/0coding/python/aws/study.txt",
+		"/Users/bunmaster/g/0coding/python/aws/docker/Dockerfile",
+		"/Users/bunmaster/g/0coding/python/aws/Dockerfile",
+		"/Users/bunmaster/g/0coding/python/aws/app.py",
+		"/Users/bunmaster/g/0coding/python/aws/requirements.txt",
+		"/Users/bunmaster/g/0coding/python/aws/firester.txt",
+		"/Users/bunmaster/g/0coding/node/2ndnode-win/node_modules/aws-sdk/apis/clouddirectory-2016-05-10.min.json",
+		"/Users/bunmaster/g/0coding/node/2ndnode-win/node_modules/jmespath/bower.json",
+		"/Users/bunmaster/g/0coding/node/2ndnode-win/node_modules/aws-sdk/apis/cognito-identity-2014-06-30.min.json",
+		"/Users/bunmaster/g/0coding/node/2ndnode-win/node_modules/aws-sdk/apis/datapipeline-2012-10-29.paginators.json",
+		"/Users/bunmaster/g/0coding/node/2ndnode-win/node_modules/body-parser/node_modules/debug/component.json",
+		"/Users/bunmaster/g/0coding/python/aws/email_ses_forum.py",
+		"/Users/bunmaster/g/0coding/python/aws/email-ses-minimal.py",
+		"/Users/bunmaster/g/0coding/python/aws/email_gmail.py",
+		"/Users/bunmaster/g/0coding/python/aws/class_rabbit.py",
+		"/Users/bunmaster/g/0coding/python/aws/internet.py",
+		"/Users/bunmaster/g/0coding/python/aws/email_ses.py",
+		"/Users/bunmaster/g/0coding/python/aws/helloflask.py",
+		"/Users/bunmaster/g/0coding/python/aws/datastructure.py",
+		"/Users/bunmaster/g/0coding/python/aws/class_practice2.py",
+		"/Users/bunmaster/g/0coding/python/aws/iterator_generator.py",
+		"/Users/bunmaster/g/0coding/python/aws/email_gmail2.py",
+		"/Users/bunmaster/g/0coding/python/aws/practice2.py",
+		"/Users/bunmaster/g/0coding/python/aws/util.py",
+		"/Users/bunmaster/g/0coding/python/aws/class_practice.py",
+		"/Users/bunmaster/g/0coding/python/aws/exceptionhandling2.py",
+		"/Users/bunmaster/g/0coding/python/aws/namespace_scope.py",
+		"/Users/bunmaster/Downloads/boto3-develop/boto3/utils.py",
+		"/Users/bunmaster/g/0coding/python/aws/class_rabbit_inheritance.py",
+		"/Users/bunmaster/g/0coding/python/aws/my_class.py",
+		"/Users/bunmaster/g/0coding/python/aws/Miranda.py",
+		"/Users/bunmaster/g/0coding/python/aws/class_dog.py",
+		"/Users/bunmaster/g/0coding/python/aws/class_practice",
+		"/Users/bunmaster/g/0coding/node/techstatus/app.js",
+		"/Users/bunmaster/g/0coding/python/aws_volume_cleanup/aws_volume_cleanup.py",
+		"/Users/bunmaster/g/0WebMD/exp/aws_scripts/get_subnet_vpc_igw.sh",
+		"/Users/bunmaster/g/0coding/python/aws/s3.py",
+		"/Users/bunmaster/g/0WebMD/exp/0code/techstatus/app.js",
+		"/Users/bunmaster/g/0coding/python/aws/testjson.py",
+		"/Users/bunmaster/g/0coding/python/aws/exceptionhandling.py",
+		"/Users/bunmaster/g/0coding/python/aws/cleanup.py",
+		"/Users/bunmaster/g/0coding/python/aws/PracticeExceptionClass.py",
+		"/Users/bunmaster/g/0coding/python/aws/clean_up2.py",
+		"/Users/bunmaster/g/0coding/python/aws/exception_handling3",
+		"/Users/bunmaster/g/0coding/python/aws/inputoutput.py",
+		"/Users/bunmaster/g/0coding/python/aws/str-repr.py",
+		"/Users/bunmaster/g/0coding/python/aws/file-ops.py",
+		"/Users/bunmaster/g/0coding/python/aws/strtest.py",
+		"/Users/bunmaster/g/0coding/python/aws/dictionary.py",
+		"/Users/bunmaster/g/0coding/2ndnode-win/node_modules/aws-sdk/apis/sns-2010-03-31.min.json",
+		"/Users/bunmaster/g/0WebMD/exp/0code/spi2der_web_e2e/scripts/self_service_admintool_runtime_az_centers/result1/Iteration8/steps.json",
+		"/Users/bunmaster/g/0coding/python/aws/michelle2.py",
+		"/Users/bunmaster/g/0coding/python/aws/sequenceComparison.py",
+		"/Users/bunmaster/g/0coding/python/aws/testfunction4.py",
+		"/Users/bunmaster/g/0coding/python/aws/fibo.py",
+		"/Users/bunmaster/g/0coding/python/aws/testfunction.py",
+		"/Users/bunmaster/g/0coding/python/aws/testfunction2.py",
+		"/Users/bunmaster/g/0coding/python/aws/datastructure3.py",
+		"/Users/bunmaster/g/0coding/python/aws/datastructure2.py",
+		"/Users/bunmaster/g/0coding/python/aws/datastructure01.py",
+		"/Users/bunmaster/g/0coding/python/aws/data.txt",
+		"/Users/bunmaster/g/0coding/python/aws/123.py",
+		"/Users/bunmaster/g/0coding/python/aws/test3.py",
+		"/Users/bunmaster/g/0coding/python/aws/test2.py",
+		"/Users/bunmaster/works/techstatus/src/api/controllers/awsStatsController.js",
+		"/Users/bunmaster/Library/Application Support/Sublime Text 3/Packages/User/python3.sublime-build",
+		"/Users/bunmaster/Library/Application Support/Sublime Text 3/Packages/User/PackageResourceViewer.sublime-settings",
+		"/Users/bunmaster/Library/Application Support/Sublime Text 3/Packages/Anaconda/Anaconda.sublime-settings",
+		"/Users/bunmaster/Library/Application Support/Sublime Text 3/Packages/SideBarEnhancements/Side Bar.sublime-settings",
+		"/Users/bunmaster/Library/Application Support/Sublime Text 3/Packages/User/Side Bar.sublime-settings"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 95.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "intro.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Djaneiro/Syntaxes/HTML (Django).tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 177.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 114.0
+	},
+	"pinned_build_system": "Packages/User/python3.sublime-build",
+	"project": "cloudbit.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 220.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
