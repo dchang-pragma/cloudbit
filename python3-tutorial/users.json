@@ -1,0 +1,20 @@
+{
+  "user1" : {
+    "name" : "incredible",
+    "password" : "qginuoenrnkzqiqf",
+    "service" : "gmail",
+    "id": 1
+  },
+  "user2" : {
+    "name" : "AKIAIT2EFNM5SQ26FBIA",
+    "password" : "ApMFvs4ZDP5PiUEtIO0wZC38WvilELCdygFdajDEXYON",
+    "service" : "NJFCS SES; IAM: ses-smtp-user.dchangusc ",
+    "id": 2
+  },
+  "user3" : {
+    "name" : "ramesh",
+    "password" : "password3",
+    "service" : "clerk",
+    "id": 3
+  }
+}

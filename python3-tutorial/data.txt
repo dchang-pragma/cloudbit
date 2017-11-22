@@ -1,0 +1,1 @@
+{"Reservations": [{"Instances": [{"Monitoring": {"State": "disabled"}, "PublicDnsName": "ec2-34-204-37-82.compute-1.amazonaws.com", "State": {"Code": 16, "Name": "running"}, "EbsOptimized": false, "LaunchTime": 

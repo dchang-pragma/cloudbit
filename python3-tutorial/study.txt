@@ -1,0 +1,72 @@
+https://www.python-course.eu/python3_formatted_output.php
+
+%5d
+
+https://docs.python.org/3/tutorial/inputoutput.html
+
+python standard library
+
+pickle - python object serialization
+https://docs.python.org/3/library/pickle.html#module-pickle
+
+module index
+https://docs.python.org/3/py-modindex.html
+
+exceptions
+https://docs.python.org/3/library/exceptions.html#Exception
+
+regular expression
+
+smtp with aws
+
+use cases
+
+Build Applications using Python
+Send Emails with Python
+Scrape Websites with Python to pull data
+Scrape dynamic-loaded (javascript-loaded) Websites with Python
+Read and Parse emails using Python
+Read / Write CSV (comma separated values) files to work in Excel/Numbers
+Use the Twitter API to send tweets easily through a few lines of code
+Use the Yelp API to pull data about all businesses they have on their site
+
+
+docker --version
+
+docker run hello-world
+
+docker run -d -p 80:80 --name webserver nginx
+
+docker ps
+
+docker ps -a (show running & stopped)
+
+docker
+
+docker rmi nginx.
+
+
+docker build -t friendlyhello
+docker images
+docker run -p 4000:80 friendlyhello
+docker login
+docker tag friendlyhello dchangtech/cloudsense:newbie
+docker push dchangtech/cloudsense:newbie
+
+basic docker commands
+docker build -t friendlyname .  # Create image using this directory's Dockerfile
+docker run -p 4000:80 friendlyname  # Run "friendlyname" mapping port 4000 to 80
+docker run -d -p 4000:80 friendlyname         # Same thing, but in detached mode
+docker container ls                                # List all running containers
+docker container ls -a             # List all containers, even those not running
+docker container stop <hash>           # Gracefully stop the specified container
+docker container kill <hash>         # Force shutdown of the specified container
+docker container rm <hash>        # Remove specified container from this machine
+docker container rm $(docker container ls -a -q)         # Remove all containers
+docker image ls -a                             # List all images on this machine
+docker image rm <image id>            # Remove specified image from this machine
+docker image rm $(docker image ls -a -q)   # Remove all images from this machine
+docker login             # Log in this CLI session using your Docker credentials
+docker tag <image> username/repository:tag  # Tag <image> for upload to registry
+docker push username/repository:tag            # Upload tagged image to registry
+docker run username/repository:tag                   # Run image from a registry

@@ -1,0 +1,332 @@
+{
+  "Description": "Lab 4: WAF ",
+  "Parameters": {
+    "KeyName":{
+      "Description":"Name of an existing EC2 KeyPair to enable SSH access to the test instance",
+      "Type":"String"
+    }
+  },
+  "Mappings": {
+    "AmazonLinuxRegionMap": {
+      "us-east-1": {
+        "AMI": "ami-6869aa05"
+      },
+      "us-west-1": {
+        "AMI": "ami-31490d51"
+      },
+      "us-west-2": {
+        "AMI": "ami-7172b611"
+      },
+      "eu-west-1": {
+        "AMI": "ami-f9dd458a"
+      },
+      "eu-central-1": {
+        "AMI": "ami-ea26ce85"
+      },
+      "ap-northeast-1": {
+        "AMI": "ami-374db956"
+      },
+      "ap-northeast-2": {
+        "AMI": "ami-2b408b45"
+      },
+      "ap-southeast-1": {
+        "AMI": "ami-a59b49c6"
+      },
+      "ap-southeast-2": {
+        "AMI": "ami-dc361ebf"
+      },
+      "ap-south-1": {
+        "AMI": "ami-ffbdd790"
+      },
+      "sa-east-1": {
+        "AMI": "ami-6dd04501"
+      }
+    }
+  },
+  "Resources" : {
+    "VPC": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": "10.1.0.0/16",
+        "EnableDnsHostnames" : true,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "lab-vpc"
+          }
+        ]
+      }
+    },
+    "InternetGateway": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "lab-igw"
+          }
+        ]
+      }
+    },
+    "AttachGateway": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VPC"
+        },
+        "InternetGatewayId": {
+          "Ref": "InternetGateway"
+        }
+      }
+    },
+    "PublicSubnet": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            "0",
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        },
+        "CidrBlock": "10.1.0.0/24",
+        "VpcId": {
+          "Ref": "VPC"
+        },
+        "MapPublicIpOnLaunch": "true",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "lab-subnet-public"
+          }
+        ]
+      }
+    },
+    "ExternalRoutingTable": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VPC"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "lab-routetable-public"
+          }
+        ]
+      }
+    },
+    "DefaultRoute": {
+      "Type": "AWS::EC2::Route",
+      "DependsOn" : "AttachGateway",
+      "Properties": {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "InternetGateway"
+        },
+        "RouteTableId": {
+          "Ref": "ExternalRoutingTable"
+        }
+      }
+    },
+    "ExternalNetworkRouteAssociation":{
+      "Type":"AWS::EC2::SubnetRouteTableAssociation",
+      "Properties":{
+        "RouteTableId":{
+          "Ref":"ExternalRoutingTable"
+        },
+        "SubnetId":{
+          "Ref":"PublicSubnet"
+        }
+      }
+    },
+    "WebServerSG": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "WebServerSG",
+        "VpcId": {
+          "Ref": "VPC"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "WebServerSG"
+          }
+        ],
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "22",
+            "ToPort": "22",
+            "CidrIp": "0.0.0.0/0"
+          },
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "80",
+            "ToPort" : "80",
+            "CidrIp" : "0.0.0.0/0"
+          }
+        ]
+      }
+    },
+    "RootRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "ec2.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Path": "/",
+        "Policies": [
+          {
+            "PolicyName": "web-admin",
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
+                      "waf:ListIPSets",
+                      "waf:UpdateIPSet",
+                      "waf:GetChangeToken",
+                      "ec2:DescribeSecurityGroups",
+                      "ec2:AuthorizeSecurityGroupIngress",
+                      "ec2:RevokeSecurityGroupIngress"
+                  ],
+                  "Resource": [
+                      "*"
+                  ],
+                  "Effect": "Allow"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "RootInstanceProfile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Properties": {
+        "Path": "/",
+        "Roles": [
+          {
+            "Ref": "RootRole"
+          }
+        ]
+      }
+    },
+
+    "WebInstance":{
+      "Type":"AWS::EC2::Instance",
+      "DependsOn" : "AttachGateway",
+      "CreationPolicy": {
+        "ResourceSignal": {
+          "Count": "1",
+          "Timeout": "PT25M"
+        }
+      },
+      "Properties":{
+        "ImageId": {
+          "Fn::FindInMap": [
+            "AmazonLinuxRegionMap",
+            {
+              "Ref": "AWS::Region"
+            },
+            "AMI"
+          ]
+        },
+        "Tags":[{"Key": "Name","Value": "WebServer"}],
+        "InstanceType":"t2.medium",
+        "KeyName":{"Ref":"KeyName"},
+        "SubnetId":{"Ref":"PublicSubnet"},
+        "SecurityGroupIds": [ { "Ref" : "WebServerSG"}],
+        "IamInstanceProfile": {
+          "Ref": "RootInstanceProfile"
+        },
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "",
+              [
+                "#!/bin/bash -ex\n",
+                "yum -y update \n",
+                "yum -y install httpd php\n",
+                "# update apache config to log X-Forwarded-For\n",
+                "echo 'LogFormat \"%h (%{X-Forwarded-For}i) %l %u %t \\\"%r\\\" %>s %b \\\"%{Referer}i\\\" \\\"%{User-Agent}i\\\"\" combined' >> /etc/httpd/conf/httpd.conf\n",
+                "chkconfig httpd on\n",
+                "cd /var/www/html\n",
+                "wget https://us-west-2-aws-training.s3.amazonaws.com/awsu-ilt/AWS-200-ADV/v2.1/lab-4-waf/scripts/waf-app.zip\n",
+                "unzip waf-app.zip\n",
+                "service httpd start\n",
+                "pip install tabulate boto3\n",
+                "su ec2-user <<'EOF'\n",
+                "mkdir  /home/ec2-user/.aws\n",
+                "echo '[default]' > /home/ec2-user/.aws/config\n",
+                "echo 'region = ", {"Ref" : "AWS::Region"}, "' >> /home/ec2-user/.aws/config\n",
+                "cd /home/ec2-user\n",
+                "wget https://us-west-2-aws-training.s3.amazonaws.com/awsu-ilt/AWS-200-ADV/v2.1/lab-4-waf/scripts/waf_ip_update.py\n",
+                "wget https://us-west-2-aws-training.s3.amazonaws.com/awsu-ilt/AWS-200-ADV/v2.1/lab-4-waf/scripts/cloudfront_sgs.py\n",
+                "EOF\n",
+                "/opt/aws/bin/cfn-signal ",
+                "  --stack ", { "Ref": "AWS::StackName" },
+                "  --resource WebInstance " ,
+                "  --region ", { "Ref" : "AWS::Region" }, "\n"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    "EIP" : {
+      "Type" : "AWS::EC2::EIP",
+      "Properties" : {
+        "InstanceId" : { "Ref" : "WebInstance" }
+      }
+    },
+    "CloudFrontDistribution" : {
+      "Type" : "AWS::CloudFront::Distribution",
+      "DependsOn" : "EIP",
+      "Properties" : {
+        "DistributionConfig" : {
+          "DefaultCacheBehavior" : {
+            "DefaultTTL" : 0,
+            "ForwardedValues" : {
+              "Headers" : [ "*" ],
+              "QueryString" : true
+            },
+            "TargetOriginId" : "EC2-PHP-site",
+            "ViewerProtocolPolicy" : "allow-all"
+          },
+          "Enabled" : true,
+          "Origins" : [
+            {
+              "CustomOriginConfig" : {
+                "OriginProtocolPolicy" : "http-only"
+              },
+              "DomainName" : { "Fn::GetAtt" : [ "WebInstance", "PublicDnsName" ] },
+              "Id" : "EC2-PHP-site"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Outputs" : {
+    "WebsiteURL": {
+      "Value": { "Fn::Join": [ "", [ "http://", { "Fn::GetAtt" : [ "WebInstance", "PublicDnsName" ] } ] ] }
+    },
+    "CloudFrontURL": {
+      "Value": { "Fn::Join": [ "", [ "https://", { "Fn::GetAtt" : [ "CloudFrontDistribution", "DomainName" ] } ] ] }
+    }
+  }
+}
