@@ -186,6 +186,12 @@ docker swarm rm ndfl2nxemkbf30f56cqiq8lkv
 docker swarm join --token SWMTKN-1-1w9ydyr58h0fjhv7emr0bwapl4i2f61uwe3wavqadr57rip8tj-5lih1kgrd3kk0s584y1c6jxov 172.31.29.231:2377
 
 
+# -------------- pet shop sample ----------------------
+docker ps
+docker stop cf8bc7cc1d3e
+
+
+
 
 
 
