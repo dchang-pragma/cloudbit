@@ -1,3 +1,5 @@
+# ideas - stack (pets-dev), service (pets-dev_web and pets-dev_db), container (each containers to host replicas of services)
+
 docker --version
 docker run hello-world
 docker run -d -p 80:80 --name webserver nginx
@@ -189,6 +191,13 @@ docker swarm join --token SWMTKN-1-1w9ydyr58h0fjhv7emr0bwapl4i2f61uwe3wavqadr57r
 # -------------- pet shop sample ----------------------
 docker ps
 docker stop cf8bc7cc1d3e
+docker container stop cf8bc7cc1d3e
+
+docker stack deploy pets-dev-compose.yml pets-dev
+docker stack ls
+docker stack rm pets-dev # or docker service rm pets-dev_web pets-dev_db
+docker servie rm 
+
 
 
 
