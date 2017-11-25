@@ -24,49 +24,27 @@
 	"buffers":
 	[
 		{
-			"file": "intro.txt",
-			"settings":
-			{
-				"buffer_size": 0,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "/Users/bunmaster/g/0coding/hello-world/README.md",
 			"settings":
 			{
-				"buffer_size": 37,
+				"buffer_size": 63,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "docker --version\ndocker run hello-world\ndocker run -d -p 80:80 --name webserver nginx\ndocker ps\ndocker ps -a #(show running & stopped)\ndocker\ndocker rmi nginx.\n# ------------containers ------------------- #\ndocker build -t friendlyhello\ndocker images\ndocker run -p 4000:80 friendlyhello\ndocker login\ndocker tag friendlyhello dchangtech/cloudsense:newbie\ndocker push dchangtech/cloudsense:newbie\n\n\n# -------- basic docker commands 1 & 2 --------- #\ndocker build -t friendlyname . # Create image using this directory's Dockerfile\ndocker run -p 4000:80 friendlyname # Run \"friendlyname\" mapping port 4000 to 80\ndocker run -d -p 4000:80 friendlyname # Same thing, but in detached mode\ndocker container ls # List all running containers\ndocker container ls -a # List all containers, even those not running\ndocker container stop <hash> # Gracefully stop the specified container\ndocker container kill <hash> # Force shutdown of the specified container\ndocker container rm <hash> # Remove specified container from this machine\ndocker container rm $(docker container ls -a -q) # Remove all containers\ndocker image ls -a # List all images on this machine\ndocker image rm <image id> # Remove specified image from this machine\ndocker image rm $(docker image ls -a -q) # Remove all images from this machine\ndocker login # Log in this CLI session using your Docker credentials\ndocker tag <image> username/repository:tag # Tag <image> for upload to registry\ndocker push username/repository:tag # Upload tagged image to registry\ndocker run username/repository:tag # Run image from a registry\n\n\n\n# ----------------services ----------------------- #\ndocker swarm init # initiate swarm from mac itself\ndocker stack deploy -c docker-compose.yml getstartedlab\ndocker container ls -q\ndocker stack rm getstartedlab\ndocker swarm leave --force\n\n# --------------basic commands # 3 ------------#\ndocker stack ls                                            # List stacks or apps\ndocker stack deploy -c <composefile> <appname>  # Run the specified Compose file\ndocker service ls                 # List running services associated with an app\ndocker service ps <service>                  # List tasks associated with an app\ndocker inspect <task or container>                   # Inspect task or container\ndocker container ls -q                                      # List container IDs\ndocker stack rm <appname>                             # Tear down an application\ndocker swarm leave --force      # Take down a single node swarm from the manager\n\n\n# -------------------swarms ------------------- #\n\n# sudo lsof -PiTCP -sTCP:LISTEN\n# netstat -ap tcp | grep -i \"listen\"\n\n\ndocker-machine create --driver virtualbox myvm1\ndocker-machine create --driver virtualbox myvm2\ndocker-machine ls\ndocker-machine ssh myvm1 \"docker swarm init --advertise-addr 192.168.99.100\" # initialize the swarm (cluster) and add myvm1 as the manager (first machine)\n\n# to join as a manager; you will need to have myvm1 to leave the swarms\ndocker-machine ssh myvm1 \"docker swarm join-token manager\" # get information you need to join the swarm; the output should look like following\n\n# to get token to join as a worker\ndocker-machine ssh myvm1 \"docker swarm join-token worker\"\n\ndocker-machine ssh myvm2 \"docker swarm leave\"\n\ndocker-machine ssh myvm2 \"docker swarm join --token SWMTKN-1-0lhs05j4xxg7dqf4smxl2eiklgfd1ue5nop45sh8e4zg76w9nd-3jmllpj7jmq0wu28yslei5ido 192.168.99.100:2377\"\n\ndocker-machine ssh myvm1 \"docker node ls\"\n\ndocker-machine env myvm1 # to get following output then run them to configure your shell to talk to myvm1 - swarm manager;\n\nexport DOCKER_TLS_VERIFY=\"1\"\nexport DOCKER_HOST=\"tcp://192.168.99.100:2376\"\nexport DOCKER_CERT_PATH=\"/Users/bunmaster/.docker/machine/machines/myvm1\"\nexport DOCKER_MACHINE_NAME=\"myvm1\"\n\neval $(docker-machine env myvm1)\n\n# ----- deploy the app -------\ndocker stack deploy -c docker-compose.yml getstartedlab\ndocker stack ps getstartedlab\n\n#Alternatively, you can wrap Docker commands in the form of docker-machine ssh <machine> \"<command>\", which logs directly into the VM but doesn’t give you immediate access to files on your local host.\n\ndocker stack rm getstartedlab\ndocker-machine ssh myvm2 \"docker swarm leave\"\ndocker-machine ssh myvm1 \"docker swarm leave\"\n\n#unset environment variable\neval $(docker-machine env -u)\n\ndocker-machine stop $(docker-machine ls -q)               # Stop all running VMs\ndocker-machine rm $(docker-machine ls -q) # Delete all VMs and their disk images\n\n\n# ------------------- commands #4 ---------------------#\ndocker-machine create --driver virtualbox myvm1 # Create a VM (Mac, Win7, Linux)\ndocker-machine create -d hyperv --hyperv-virtual-switch \"myswitch\" myvm1 # Win10\ndocker-machine env myvm1                # View basic information about your node\ndocker-machine ssh myvm1 \"docker node ls\"         # List the nodes in your swarm\ndocker-machine ssh myvm1 \"docker node inspect <node ID>\"        # Inspect a node\ndocker-machine ssh myvm1 \"docker swarm join-token -q worker\"   # View join token\ndocker-machine ssh myvm1   # Open an SSH session with the VM; type \"exit\" to end\ndocker node ls                # View nodes in swarm (while logged on to manager)\ndocker-machine ssh myvm2 \"docker swarm leave\"  # Make the worker leave the swarm\ndocker-machine ssh myvm1 \"docker swarm leave -f\" # Make master leave, kill swarm\ndocker-machine ls # list VMs, asterisk shows which VM this shell is talking to\ndocker-machine start myvm1            # Start a VM that is currently not running\ndocker-machine env myvm1      # show environment variables and command for myvm1\neval $(docker-machine env myvm1)         # Mac command to connect shell to myvm1\n& \"C:\\Program Files\\Docker\\Docker\\Resources\\bin\\docker-machine.exe\" env myvm1 | Invoke-Expression   # Windows command to connect shell to myvm1\ndocker stack deploy -c <file> <app>  # Deploy an app; command shell must be set to talk to manager (myvm1), uses local Compose file\ndocker-machine scp docker-compose.yml myvm1:~ # Copy file to node's home dir (only required if you use ssh to connect to manager and deploy the app)\ndocker-machine ssh myvm1 \"docker stack deploy -c <file> <app>\"   # Deploy an app using ssh (you must have first copied the Compose file to myvm1)\neval $(docker-machine env -u)     # Disconnect shell from VMs, use native docker\ndocker-machine stop $(docker-machine ls -q)               # Stop all running VMs\ndocker-machine rm $(docker-machine ls -q) # Delete all VMs and their disk images\n\n# ------------------ stack ----------------------- #\ndocker-machine create --driver virtualbox myvm1\ndocker-machine create --driver virtualbox myvm2\ndocker-machine ls\ndocker-machine ssh myvm1 \"docker swarm init --advertise-addr 192.168.99.100\"\ndocker-machine ssh myvm2 \"docker swarm join --token SWMTKN-1-5zmv5gtva6oo4e64l30b985brhleg9se9iqdyvmzpdkozepifl-7jz3oilwosdvd3rmy0101c7zk 192.168.99.100:2377\"\ndocker-machine env myvm1\neval $(docker-machine env myvm1)\ndocker stack deploy -c docker-compose.yml getstartedlab\ndocker-machine ssh myvm1 \"mkdir ./data\"\ndocker stack deploy -c docker-compose.yml getstartedlab\ndocker service ls # wait for 5 seconds\n\n# ---------------------- cloud ---------------------- #\n# create role arn: arn:aws:iam::410094167485:role/dockercloud-swarm-role\n# create swarm from docker cloud\n# wait 5-10 minutes until ec2 are provisioned and online\n# set security grou to allo 80/8080\n\n#docker run -ti --rm -v /var/run/docker.sock:/var/run/docker.sock dockercloud/registration\n\n#docker run --rm -ti -v /var/run/docker.sock:/var/run/docker.sock -e DOCKER_HOST dockercloud/client dchangtech/swarm-mark-1\n\n# error Unable to query docker version: Get https://192.168.99.100:2376/v1.15/version: x509: cannot validate certificate for 192.168.99.100 because it doesn't contain any IP SANs\n\n\n# AWS swarm\n# connect to AWS swarm via docker manager\ndocker node ls\ncd /Users/bunmaster/python/aws/docker\nssh -i /Users/bunmaster/dchangtech.pem docker@54.91.241.198\nmkdir ./data\ndocker stack deploy -c /Users/bunmaster/python/aws/docker/docker-compose.yml getstartedlab\ndocker stack services getstartedlab # list all services\ndocker stack ps getstartedlab # List the tasks in the stack\n# ID                  NAME                         IMAGE                             NODE                            DESIRED STATE       CURRENT STATE           ERROR               PORTS\n# vk4c8h19u2kb        getstartedlab_redis.1        redis:latest                      ip-172-31-29-231.ec2.internal   Running             Running 2 minutes ago                       \n# naf29n2vswhz        getstartedlab_visualizer.1   dockersamples/visualizer:stable   ip-172-31-29-231.ec2.internal   Running             Running 2 minutes ago                       \n# zgi7n2n6vtgi        getstartedlab_web.1          dchangtech/cloudsense:newbie      ip-172-31-20-70.ec2.internal    Running             Running 2 minutes ago                       \n# 0f3dnw7tnkcn        getstartedlab_web.2          dchangtech/cloudsense:newbie      ip-172-31-20-70.ec2.internal    Running             Running 2 minutes ago                       \n# 1838s7ce3vb4        getstartedlab_web.3          dchangtech/cloudsense:newbie      ip-172-31-29-231.ec2.internal   Running             Running 2 minutes ago                       \n# ur4lx37c6w49        getstartedlab_web.4          dchangtech/cloudsense:newbie      ip-172-31-20-70.ec2.internal    Running             Running 2 minutes ago                       \n# byk18yyzxuo7        getstartedlab_web.5          dchangtech/cloudsense:newbie      ip-172-31-29-231.ec2.internal   Running             Running 2 minutes ago                       \n\n# stack - getstartedlab\n# service - getstartedlab_web, getstartedlab_redis, getstartedlab_visualizer\n\n\n\n# on each ec2\ndocker container ls # list all containers running\n\n# from wokrer node\ndocker swarm leave\n# from manager node\ndocker swarm rm ndfl2nxemkbf30f56cqiq8lkv\n\n# from worker node\n\ndocker swarm join --token SWMTKN-1-1w9ydyr58h0fjhv7emr0bwapl4i2f61uwe3wavqadr57rip8tj-5lih1kgrd3kk0s584y1c6jxov 172.31.29.231:2377\n\n\n# -------------- pet shop sample ----------------------\ndocker ps\ndocker stop cf8bc7cc1d3e\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
-			"file": "docker/docker-commands.sh",
-			"file_size": 10171,
-			"file_write_time": 131558846080000000,
+			"file": "cloudweb/app.py",
 			"settings":
 			{
-				"buffer_size": 10169,
+				"buffer_size": 2219,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "git-manage.sh",
 			"settings":
 			{
-				"buffer_size": 290,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "web/requirements.txt",
-			"settings":
-			{
-				"buffer_size": 13,
-				"encoding": "UTF-8",
+				"buffer_size": 0,
 				"line_ending": "Unix"
 			}
 		},
@@ -187,12 +165,22 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/bunmaster/g/0coding/cloudbit",
-		"/Users/bunmaster/g/0coding/cloudbit/docker",
-		"/Users/bunmaster/g/0coding/cloudbit/web"
+		"/Users/bunmaster/g/0coding/cloudbit"
 	],
 	"file_history":
 	[
+		"/Users/bunmaster/g/0coding/cloudbit/docker/docker-commands.sh",
+		"/Users/bunmaster/g/0coding/cloudbit/cloudweb/app2.py",
+		"/Users/bunmaster/g/0coding/cloudbit/cloudweb/templates/signup.html",
+		"/Users/bunmaster/g/0coding/cloudbit/cloudweb/templates/index.html",
+		"/Users/bunmaster/g/0coding/cloudbit/cloudweb/sql/tbl_user.sql",
+		"/Users/bunmaster/g/0coding/cloudbit/cloudweb/sql/sp_createUser.sql",
+		"/Users/bunmaster/g/0coding/cloudbit/cloudweb/static/js/signup.js",
+		"/Users/bunmaster/g/0coding/cloudbit/cloudweb/static/signUp.css",
+		"/Users/bunmaster/g/0coding/cloudbit/app2.py",
+		"/Users/bunmaster/g/0coding/cloudbit/web/requirements.txt",
+		"/Users/bunmaster/g/0coding/cloudbit/cloudweb/templates/signup.css",
+		"/Users/bunmaster/g/0coding/cloudbit/intro.txt",
 		"/Users/bunmaster/g/0coding/cloudbit/web/app.py",
 		"/Users/bunmaster/g/0coding/cloudbit/Dockerfile.Dockerfile",
 		"/Users/bunmaster/g/0coding/cloudbit/web/cloudbit.sublime-project",
@@ -290,6 +278,13 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"p_user",
+			"signup.js",
+			"jquer",
+			"css",
+			"main",
+			"signup",
+			"app"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -307,12 +302,78 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "intro.txt",
+					"file": "/Users/bunmaster/g/0coding/hello-world/README.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 63,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								63,
+								63
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "cloudweb/app.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2219,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								154,
+								154
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
 					"semi_transient": false,
 					"settings":
 					{
@@ -329,125 +390,14 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/Djaneiro/Syntaxes/HTML (Django).tmLanguage"
+							"default_dir": "/Users/bunmaster/g/0coding/cloudbit",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/Users/bunmaster/g/0coding/hello-world/README.md",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 37,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								37,
-								37
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "docker/docker-commands.sh",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10169,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								9275,
-								9457
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 3005.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "git-manage.sh",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 290,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "web/requirements.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 13,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								13,
-								13
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Djaneiro/Syntaxes/HTML (Django).tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -457,7 +407,7 @@
 			"sheets":
 			[
 				{
-					"buffer": 5,
+					"buffer": 3,
 					"file": "/Users/bunmaster/g/0coding/docker-pets/pets-dev-compose.yml",
 					"semi_transient": false,
 					"settings":
@@ -469,8 +419,8 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								317,
+								317
 							]
 						],
 						"settings":
@@ -480,7 +430,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 13.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
